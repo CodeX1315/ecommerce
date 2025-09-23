@@ -1,4 +1,16 @@
+import { useCart } from "../../context/cartd-context";
+
 export const CartCard = ({ product }) => {
+  const { cartDispatch } = useCart();
+
+  const removeCartClick = (product) => {
+    console.log("Product passed:", product); // check id exists
+    cartDispatch({
+      type: "REMOVE_FROM_CART",
+      payload: { id: product.id },
+    });
+  };
+
   return (
     <div className="flex bg-white shadow-md rounded-lg overflow-hidden mb-4 w-[800px]">
       {/* Image */}
@@ -28,15 +40,22 @@ export const CartCard = ({ product }) => {
         <div className="flex items-center gap-2 mt-2">
           <span className="font-medium">Quantity:</span>
           <div className="flex items-center border rounded-md overflow-hidden">
-            <button className="px-2 py-1 bg-gray-200 hover:bg-gray-300">-</button>
+            <button className="px-2 py-1 bg-gray-200 hover:bg-gray-300">
+              -
+            </button>
             <span className="px-3 py-1">{1}</span>
-            <button className="px-2 py-1 bg-gray-200 hover:bg-gray-300">+</button>
+            <button className="px-2 py-1 bg-gray-200 hover:bg-gray-300">
+              +
+            </button>
           </div>
         </div>
 
         {/* Buttons */}
         <div className="flex gap-2 mt-4">
-          <button className="flex-1 bg-red-500 text-white py-2 rounded hover:bg-red-600">
+          <button
+            onClick={() => removeCartClick(product)}
+            className="flex-1 bg-red-500 text-white py-2 rounded hover:bg-red-600"
+          >
             Remove From Cart
           </button>
           <button className="flex-1 border border-blue-500 text-blue-500 py-2 rounded hover:bg-blue-50">

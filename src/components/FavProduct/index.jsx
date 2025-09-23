@@ -1,12 +1,13 @@
 import { useCart } from "../../context/cartd-context";
+// import { findFavProduct } from "../../utils/findFavProduct";
 import { findProductInCart } from "../../utils/findProductInCart";
 import { useNavigate } from "react-router-dom";
-import { findFavProduct } from "../../utils/findFavProduct";
-export const ProductCard = ({product}) => {
 
-  const { cartDispatch, cart, fav } = useCart();
+export const FavProduct = ({product}) => {
+
+  const { cartDispatch, cart } = useCart();
   const isProductInCart = findProductInCart( cart, product.id);
-  const isProductInFav = findFavProduct( fav, product.id );
+//   const isProductInFav = findFavProduct( fav, product.id );
   const navigate = useNavigate();
   // console.log(isProductInCart);
   const onCartClick = (product) => {
@@ -18,12 +19,11 @@ export const ProductCard = ({product}) => {
   }
 
   // console.log(cart);
-  const onFavClick = (product) => {
-     !isProductInFav ?
+  const removeFavClick = (product) => {
       cartDispatch({
-        type: "ADD_TO_FAV",
-        payload: { product }
-      }) : navigate('/favorite')
+        type: "REMOVE_FROM_FAV",
+        payload: { id: product.id }
+      })
   }
 
   return (
@@ -42,15 +42,9 @@ export const ProductCard = ({product}) => {
           </p>
         </div>
         <div  className="cta-btn">
-            <button onClick={() => onFavClick(product)} className="button btn-primary btn-icon cart-btn d-flex bg-rose-400 align-center justify-center gap cursor btn-margin">
-             <span className="material-icons-outlined text-3xl flex">
-                {
-                    isProductInFav ? 'favorite' : 'favorite_border'
-                }
-             </span>
-             {
-                isProductInFav ? 'Check Wishlist' : 'Add to wishlist'
-             }
+            <button onClick={() => removeFavClick(product)} className="button btn-primary btn-icon cart-btn d-flex bg-rose-400 align-center justify-center gap cursor btn-margin">
+             <span className="material-icons-outlined text-3xl">favorite</span>
+            Remove From Wishlist
           </button>
           <button onClick={ () => onCartClick(product)} className="button btn-primary btn-icon cart-btn d-flex bg-rose-400  align-center justify-center gap cursor btn-margin">
              <span className="material-icons-outlined text-3xl">
