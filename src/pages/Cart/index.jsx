@@ -12,22 +12,23 @@ export const Cart = () => {
         <p className="text-center font-black font-mono text-3xl mt-4 text-red-600 ">
           Shopy Cart
         </p>
-        <div className="flex flex-wrap">
-        <div>
-          {cart?.length > 0 ? (
-            cart.map((product) => (
-              <CartCard key={product.id} product={product} />
-            ))
-          ) : (
-            <p className="justify-center font-black font-mono text-5xl text-center text-purple-700">
-              OOPS the cart is empty
-            </p>
-          )}
-        </div>
-        <div className="ml-52">
-            <PriceDetails />
-        </div>
-        </div>
+        {cart?.length > 0 ? (
+          <div className="flex flex-wrap">
+            <div>
+              {cart?.length > 0 &&
+                cart.map((product) => (
+                  <CartCard key={product.id} product={product} />
+                ))}
+            </div>
+            <div className="ml-52">
+              <PriceDetails />
+            </div>
+          </div>
+        ) : (
+          <p className="justify-center font-black font-mono text-5xl text-center text-purple-700">
+            OOPS the cart is empty
+          </p>
+        )}
       </main>
     </div>
   );
