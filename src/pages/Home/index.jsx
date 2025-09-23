@@ -3,10 +3,11 @@ import { useEffect, useState } from "react";
 import { getAllProduct } from "../../api/getAllProduct";
 import { ProductCard } from "../../components/ProdctCard";
 
+
 export const Home = () => {
 
     const [products, setProducts] = useState([]);
-
+    
     useEffect(() => {
         (async () =>{
             const data = await getAllProduct();
