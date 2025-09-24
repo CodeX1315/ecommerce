@@ -3,13 +3,16 @@ import { userLogin } from "../../api/userLogin";
 import { useNavigate } from "react-router-dom";
 
 export const Login = () => {
-    const { loginDispatch, email, password } = useLogin();
+    const { loginDispatch, email, password, token} = useLogin();
     const navigate = useNavigate();
     
     
     const onFormSubmit = async (e) => {
         e.preventDefault();
        const data = await userLogin(email, password);
+       if(Object.keys(data?.length > 0)){
+        localStorage.setItem('token', token)
+       }
        console.log(data);
        loginDispatch({
         type: "TOKEN",
