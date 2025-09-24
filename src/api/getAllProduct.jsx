@@ -10,3 +10,13 @@ export const getAllProduct = async () => {
         return error;
     }
 }
+
+export const getProductCategory = async () => {
+    const URL = `${BaseUrl}/categories`;
+    try {
+        const { data } = await axios.get(URL);
+        return data;
+    } catch (error) {
+        return error;
+    }
+}

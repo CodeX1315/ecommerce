@@ -1,9 +1,28 @@
+import { useState } from "react";
 import { NavLink } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import { useLogin } from "../../context/login-context";
 // import logo from "../../assets/images/shopify.png";
 
 export const Navbar = () => {
   const navigate = useNavigate();
+const { loginDispatch , token} = useLogin();
+
+const [isAccountLogin, setisAccountLogin] = useState(false);
+
+const onLoginClick = () => {
+  console.log("click")
+  if(token){
+    navigate('/auth/login')
+  }else{
+    loginDispatch({
+      type: 'LOGOUT',
+
+    })
+    navigate('/auth/login')
+  }
+}
+
   return (
     <header className="sticky top-2 z-50">
       <nav className="flex justify-between items-center rounded-full shadow-lg top-0 bottom-0 bg-blue-50 h-[60px] ml-4 mr-4">
@@ -38,16 +57,17 @@ export const Navbar = () => {
             </span>
           </NavLink>
 
-          <NavLink
-            to="/profile"
-            className={({ isActive }) =>
-              `hover:text-blue-500 ${isActive ? "text-blue-600" : ""}`
-            }
-          >
-            <span className="material-icons-outlined text-3xl">
+          
+            <span onClick={() => setisAccountLogin(!isAccountLogin)} className="material-icons-outlined text-3xl hover:text-blue-500 hover:cursor-pointer">
               account_circle
             </span>
-          </NavLink>
+            {
+               isAccountLogin && <button onClick={onLoginClick} className="rounded-full bg-blue-400 p-3 w-16">
+                {
+                  token  ? 'LOGOUT' : 'LOGIN'
+                }</button>
+            }
+          
         </div>
       </nav>
     </header>
